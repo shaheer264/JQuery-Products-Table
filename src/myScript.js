@@ -16,6 +16,11 @@ function myFunction () {
     var price = document.getElementById('product_price').value;
     var name = document.getElementById('product_name').value;
     var qua = document.getElementById('product_quantity').value;
+    sku=sku*1;
+    $("#product_sku").css({"border":"1px solid black"});
+    $("#product_name").css({"border":"1px solid black"});
+    $("#product_price").css({"border":"1px solid black"});
+    $("#product_quantity").css({"border":"1px solid black"});
     logic (sku, price, name, qua);
     display(arr);
 }
@@ -26,9 +31,29 @@ function logic(id, price, name, quantity)
     {
         if (arr[i].sku == id)
         {
-            $(".error").show();
+            alert("Product ID already exists.")
             return;
         }
+    }
+    
+    if (id=="" || isNaN(id) || name == "" || /[^a-zA-Z]/.test(name)) {
+        if( id=="" || isNaN(id)) {
+            $(".error").show();
+            $("#product_sku").css({"border":"1px solid red"});
+            
+        }
+        else {
+            $("#product_sku").css({"border":"1px solid black"});
+        }
+        if (name == "" || /[^a-zA-Z]/.test(name)) {
+            $(".error").show();
+            $("#product_name").css({"border":"1px solid red"});
+            
+        }
+        else {
+            $("#product_name").css({"border":"1px solid black"});
+        }
+        return;
     }
     obj = {};
     obj["sku"] = id;
@@ -63,15 +88,12 @@ function display(result) {
     $('#product_quantity').val("");
     
 }
-
-
 function editForm(id)
 {
     $('#add_product').hide();
     $('#update_product').show();
     for (var i = 0; i < arr.length; i++)
     {
-        console.log(typeof(arr[i].sku), typeof(id));
         if (arr[i].sku == id)
         {
             $('#product_sku').val(arr[i].sku);
@@ -82,6 +104,11 @@ function editForm(id)
             $('#product_name').val(arr[i].name);
             // document.getElementById('product_quantity').value = arr[i].Quantity;
             $('#product_quantity').val(arr[i].Quantity);
+
+            $("#product_sku").css({"border":"1px solid black"});
+            $("#product_name").css({"border":"1px solid black"});
+            $("#product_price").css({"border":"1px solid black"});
+            $("#product_quantity").css({"border":"1px solid black"});
             temp=i;
         }
     }
@@ -99,6 +126,31 @@ $("#update_product").click(function(){
     arr[temp].name = $('#product_name').val();
     // arr[temp].Quantity = document.getElementById('product_quantity').value;
     arr[temp].Quantity = $('#product_quantity').val();
+
+    id=arr[temp].sku;
+    name1=arr[temp].name;
+
+
+    if (id=="" || isNaN(id) || name1 == "" || /[^a-zA-Z]/.test(name1)) {
+        if( id=="" || isNaN(id)) {
+            $(".error").show();
+            $("#product_sku").css({"border":"1px solid red"});
+            
+        }
+        else {
+            $("#product_sku").css({"border":"1px solid black"});
+        }
+        if (name1 == "" || /[^a-zA-Z]/.test(name1)) {
+            $(".error").show();
+            $("#product_name").css({"border":"1px solid red"});
+            
+        }
+        else {
+            $("#product_name").css({"border":"1px solid black"});
+        }
+        display(arr);
+        return;
+    }
 
     $(".success").show();
     display(arr);
